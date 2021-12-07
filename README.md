@@ -3,7 +3,7 @@ A uPic server implement by go
 
 #### 自定义uPic图床服务端
 
-简介: [upic](https://blog.svend.cc/upic/)
+简介: [uPic](https://blog.svend.cc/upic/)
 
 自定义配置: [自定义图床配置](https://blog.svend.cc/upic/tutorials/custom/)
 
