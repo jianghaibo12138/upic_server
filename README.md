@@ -7,6 +7,14 @@ A uPic server implement by go
 
 自定义配置: [自定义图床配置](https://blog.svend.cc/upic/tutorials/custom/)
 
+#### 添加身份认证标识
+
+- 生成自己的唯一标识.(md5, hash等)
+- 将唯一标识写入[authenticate.txt](./authenticate.txt)
+- 在uPic中添加请求头
+
+![20211208114701_lCycUI](http://139.9.93.249:8500/images/20211208114701_lCycUI.png)
+
 #### 启动方式
 
 - 编译
