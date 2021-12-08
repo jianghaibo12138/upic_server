@@ -3,11 +3,34 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"net/http"
+	"os"
+	"strings"
 	"time"
 )
 
+var HashSalt = ""
+
+func TokenRead() {
+	f, err := os.Open("authenticate.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	tokenBytes, err := ioutil.ReadAll(f)
+	if err != nil {
+		panic(err)
+	}
+	HashSalt = strings.ReplaceAll(string(tokenBytes), "\n", "")
+}
+
 func UploadImagesController(context *gin.Context) {
+	token := context.GetHeader("Authorization")
+	if token != HashSalt {
+		context.JSON(200, gin.H{"code": 201, "message": "token error", "token": token})
+		return
+	}
 	file, err := context.FormFile("image")
 	if err != nil {
 		context.JSON(200, gin.H{"code": 500, "message": "Got error", "error": err.Error()})
@@ -27,6 +50,7 @@ func UploadImagesController(context *gin.Context) {
 }
 
 func main() {
+	TokenRead()
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
